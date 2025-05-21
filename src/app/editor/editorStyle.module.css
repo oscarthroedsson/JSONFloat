@@ -1,0 +1,6 @@
+.editor {
+  display: grid;
+  grid-template-columns: minmax(10vw, 30%) 1fr;
+  grid-template-rows: 100vh 100vh;
+  height: 100vh;
+}

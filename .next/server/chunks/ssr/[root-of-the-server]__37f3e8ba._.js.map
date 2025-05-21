@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 23, "column": 0}, "map": {"version":3,"sources":["file:///Users/oscarthroedsson/Documents/code/myownprojects/JSONFloat/src/app/editor/page.tsx"],"sourcesContent":["// app/home/page.tsx\n\"use client\";\n\nimport dynamic from \"next/dynamic\";\nimport { Canvas } from \"reaflow\";\n\nimport styles from \"./editorStyle.module\";\n\nconst MonacoEditor = dynamic(() => import(\"@monaco-editor/react\"), {\n  ssr: false,\n});\n\nexport default function HomePage() {\n  return (\n    <div className={styles.editor}>\n      <MonacoEditor height=\"100%\" defaultLanguage=\"json\" defaultValue={`{\\n  \"hello\": \"world\"\\n}`} />\n      <Canvas></Canvas>\n    </div>\n  );\n}\n"],"names":[],"mappings":"AAAA,oBAAoB;;;;;AAGpB;AACA;;AAHA;;;;;AAOA,MAAM,eAAe,CAAA,GAAA,+JAAA,CAAA,UAAO,AAAD;;;;;;IACzB,KAAK;;AAGQ,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAW,CAAA,KAAA,CAAK,EAAE,MAAM;;0BAC3B,8OAAC;gBAAa,QAAO;gBAAO,iBAAgB;gBAAO,cAAc,CAAC,wBAAwB,CAAC;;;;;;0BAC3F,8OAAC,wIAAA,CAAA,SAAM;;;;;;;;;;;AAGb","debugId":null}}]
+}
