@@ -1,0 +1,15 @@
+/* [project]/src/app/editor/editorStyle.module.css [app-client] (css) */
+.editorStyle-module__g5GrRa__editor {
+  height: 100vh;
+  overflow: none;
+  grid-template-rows: 1fr;
+  grid-template-columns: 30% 1fr;
+  display: grid;
+}
+
+.editorStyle-module__g5GrRa__editorPanel, .editorStyle-module__g5GrRa__canvasPanel {
+  height: 100vh;
+  overflow: auto;
+}
+
+/*# sourceMappingURL=src_app_editor_editorStyle_module_css_f9ee138c._.single.css.map*/

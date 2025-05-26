@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 1, "column": 0}, "map": {"version":3,"sources":["turbopack:///[project]/src/components/Values/PrimativeValueList/style.module.css"],"sourcesContent":[".primativeValueList {\n  & > :not(:last-child) {\n    margin-bottom: 4px;\n  }\n}\n"],"names":[],"mappings":"AACE"}}]
+}

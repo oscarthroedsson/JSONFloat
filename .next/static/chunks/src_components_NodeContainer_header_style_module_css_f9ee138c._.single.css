@@ -1,0 +1,27 @@
+/* [project]/src/components/NodeContainer/header/style.module.css [app-client] (css) */
+.style-module__XiYRiW__header {
+  padding: var(--spacing-sm) var(--spacing-none);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.style-module__XiYRiW__header .style-module__XiYRiW__label {
+  justify-content: start;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-text);
+  font-weight: 600;
+  display: flex;
+}
+
+.style-module__XiYRiW__header .style-module__XiYRiW__label :is(svg) {
+  width: 16px;
+}
+
+.style-module__XiYRiW__header > p:last-child {
+  font-size: var(--text-size-sm);
+  font-weight: 200;
+}
+
+/*# sourceMappingURL=src_components_NodeContainer_header_style_module_css_f9ee138c._.single.css.map*/

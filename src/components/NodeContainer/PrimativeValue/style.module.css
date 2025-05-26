@@ -1,0 +1,36 @@
+.primativeValueContainer {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, auto);
+  row-gap: var(--gap-container-xs);
+
+  padding: var(--spacing-sm) var(--spacing-none);
+
+  background-color: #f1f5f9;
+  border-radius: 4px;
+  color: var(--color-text);
+
+  > * {
+    padding-inline: var(--spacing-sm);
+  }
+
+  & .keyPairValue {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+
+    font-size: var(--text-size-md);
+    font-weight: 500;
+  }
+
+  & .keyValue {
+    color: var(--color-key);
+  }
+
+  & .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

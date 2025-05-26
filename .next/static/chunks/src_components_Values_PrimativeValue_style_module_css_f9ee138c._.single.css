@@ -1,0 +1,36 @@
+/* [project]/src/components/Values/PrimativeValue/style.module.css [app-client] (css) */
+.style-module__W9U1cG__primativeValueContainer {
+  row-gap: var(--gap-container-xs);
+  padding: var(--spacing-sm) var(--spacing-none);
+  color: var(--color-text);
+  background-color: #f1f5f9;
+  border-radius: 4px;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: 1fr;
+  display: grid;
+}
+
+.style-module__W9U1cG__primativeValueContainer > * {
+  padding-inline: var(--spacing-sm);
+}
+
+.style-module__W9U1cG__primativeValueContainer .style-module__W9U1cG__keyPairValue {
+  width: 100%;
+  font-size: var(--text-size-md);
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  display: flex;
+}
+
+.style-module__W9U1cG__primativeValueContainer .style-module__W9U1cG__keyValue {
+  color: var(--color-key);
+}
+
+.style-module__W9U1cG__primativeValueContainer .style-module__W9U1cG__footer {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+/*# sourceMappingURL=src_components_Values_PrimativeValue_style_module_css_f9ee138c._.single.css.map*/

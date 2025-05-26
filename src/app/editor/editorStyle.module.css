@@ -1,6 +1,17 @@
 .editor {
   display: grid;
-  grid-template-columns: minmax(10vw, 30%) 1fr;
-  grid-template-rows: 100vh 100vh;
+  grid-template-columns: 30% 1fr;
+  grid-template-rows: 1fr;
   height: 100vh;
+  overflow: none;
+}
+
+.editorPanel {
+  height: 100vh;
+  overflow: auto; /* Scroll inuti Monaco om den överflödar */
+}
+
+.canvasPanel {
+  height: 100vh;
+  overflow: auto; /* Ger scroll om Canvas är större än sin wrapper */
 }

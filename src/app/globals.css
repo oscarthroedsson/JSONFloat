@@ -1,6 +1,46 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-key: #db2777;
+  --color-heading: #27272a;
+  --color-text: #3f3f46;
+
+  --color-number: #93c5fd;
+  --color-string: #86efac;
+  --color-boolean: #d8b4fe;
+  --color-null: #fca5a5;
+  --color-undefined: #b91c1c;
+
+  --color-object: #d6d3d1;
+  --color-array: #fcd34d;
+
+  --text-size-xs: 0.5rem; /* 8px */
+  --text-size-sm: 0.625rem; /* 10px */
+  --text-size-md: 0.75rem; /* 12px */
+  --text-size-lg: 0.875rem; /* 14px */
+  --text-size-xl: 1rem; /*16px*/
+  --text-size-2xl: 1, 125rem; /* 18px */
+  --text-size-3xl: 1, 25rem; /* 20px */
+  --text-size-4xl: 1, 375rem; /* 22px */
+  --text-size-5xl: 1, 5rem; /* 24px */
+
+  /* add headings*/
+
+  --spacing-none: 0px;
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 10px;
+  --spacing-lg: 12px;
+  --spacing-xl: 14px;
+
+  /*is used withing a small container*/
+  --gap-container-xs: 2px;
+  --gap-container-sm: 4px;
+  --gap-container-md: 8px;
+  --gap-container-lg: 10px;
+
+  --gap-page-xs: 12px;
+  --gap-page-sm: 24px;
+  --gap-page-md: 32px;
+  --gap-page-lg: 48px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -15,28 +55,45 @@ body {
   max-width: 100vw;
   overflow-x: hidden;
 }
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+.tag {
+  height: 4px;
+  &.tagline {
+    &[data-datavalue="number"] {
+      background-color: var(--color-number);
+    }
+    &[data-datavalue="string"] {
+      background-color: var(--color-string);
+    }
+    &[data-datavalue="boolean"] {
+      background-color: var(--color-boolean);
+    }
+    &[data-datavalue="null"] {
+      background-color: var(--color-null);
+    }
+    &[data-datavalue="undefined"] {
+      background-color: var(--color-undefined);
+    }
+
+    &.sm {
+      width: 0.625rem;
+    }
+    &.md {
+      width: 1.25rem;
+    }
+    &.lg {
+      width: 2.5rem;
+    }
+  }
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+.tagVariationsContainer {
+  border-radius: 999px;
+  display: flex;
+  width: fit-content;
 }

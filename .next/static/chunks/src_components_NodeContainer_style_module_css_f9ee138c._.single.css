@@ -1,0 +1,10 @@
+/* [project]/src/components/NodeContainer/style.module.css [app-client] (css) */
+.style-module__ZC0-Xa__nodeContainer {
+  padding: var(--spacing-sm);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  height: fit-content;
+  position: fixed;
+}
+
+/*# sourceMappingURL=src_components_NodeContainer_style_module_css_f9ee138c._.single.css.map*/

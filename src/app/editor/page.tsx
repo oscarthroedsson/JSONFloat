@@ -1,35 +1,77 @@
 // app/home/page.tsx
 "use client";
-
-import dynamic from "next/dynamic";
+import styles from "./editorStyle.module.css";
 import { Canvas } from "reaflow";
 
-import styles from "./editorStyle.module.css";
-import mockJson from "@/assets/mock/jsonMock.json";
+import { useJsonGraph } from "@/hooks/useJsonGraph";
+import { useCallback, useMemo, useRef, useState } from "react";
+import JSONEditor from "@/components/editors/JsonEditor";
 
-const MonacoEditor = dynamic(() => import("@monaco-editor/react"), {
-  ssr: false,
-});
+import { CustomNode } from "@/components/customnode/customNode";
+
+import { extractFormattedNodeData } from "@/utils/formatNodeToTextContent";
+import { calculateNodeSizeFromText } from "@/utils/calculateNodeSize";
 
 export default function HomePage() {
+  const { nodes, edges, handleChange } = useJsonGraph();
+  const [paneWidth, setPaneWidth] = useState(1200);
+  const [paneHeight, setPaneHeight] = useState(800);
+
+  const reaflowEdges = useMemo(() => {
+    return edges.map((edge) => ({
+      id: edge.id,
+      from: edge.from,
+      to: edge.to,
+    }));
+  }, [edges]);
+
+  const reaflowNodes = useMemo(() => {
+    return nodes.map((node) => {
+      const content = extractFormattedNodeData(node);
+      const { width, height } = calculateNodeSizeFromText(content);
+
+      return {
+        id: node.id,
+        data: node,
+        height,
+        width,
+      };
+    });
+  }, [nodes]);
+
+  const onLayoutChange = useCallback((layout) => {
+    if (!nodes || !edges) return;
+    setPaneWidth(layout.width + 50);
+    setPaneHeight(layout.height + 50);
+    setTimeout(() => {
+      window.requestAnimationFrame(() => {
+        centerView();
+      });
+    });
+  }, []);
+
   return (
     <div className={styles.editor}>
-      <MonacoEditor
-        height="100%"
-        language="json"
-        defaultLanguage="json"
-        defaultValue={JSON.stringify(mockJson, null, 2)}
-        options={{
-          minimap: { enabled: false },
-          readOnly: false,
-          wordWrap: "on",
-          formatOnPaste: true,
-          formatOnType: true,
-          tabSize: 2,
-          scrollBeyondLastLine: false,
-        }}
-      />
-      <Canvas></Canvas>
+      <div className={styles.editorPanel}>
+        <JSONEditor handleChange={handleChange} />
+      </div>
+      <div className={styles.canvasPanel}>
+        <Canvas
+          nodes={reaflowNodes}
+          edges={reaflowEdges}
+          direction="RIGHT"
+          pannable={true}
+          zoomable={true}
+          fit={true}
+          width={paneWidth}
+          height={paneHeight}
+          maxWidth={paneWidth}
+          maxHeight={paneHeight}
+          onLayoutChange={onLayoutChange}
+          /* ...resten av props... */
+          node={(nodeProps) => <CustomNode {...nodeProps} />}
+        />
+      </div>
     </div>
   );
 }

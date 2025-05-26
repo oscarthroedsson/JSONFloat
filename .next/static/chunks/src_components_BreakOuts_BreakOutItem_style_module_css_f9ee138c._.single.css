@@ -1,0 +1,29 @@
+/* [project]/src/components/BreakOuts/BreakOutItem/style.module.css [app-client] (css) */
+.style-module__j6fCnq__breakOutItem {
+  color: var(--color-text);
+  padding: 0px var(--spacing-sm);
+  font-size: var(--text-size-md);
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  display: flex;
+}
+
+.style-module__j6fCnq__breakOutItem > :first-child {
+  justify-content: start;
+  align-items: center;
+  gap: var(--spacing-xs);
+  display: flex;
+}
+
+.style-module__j6fCnq__breakOutItem > :first-child :is(svg) {
+  width: 14px;
+}
+
+.style-module__j6fCnq__breakOutItem > :last-child {
+  justify-content: end;
+  align-items: center;
+  display: flex;
+}
+
+/*# sourceMappingURL=src_components_BreakOuts_BreakOutItem_style_module_css_f9ee138c._.single.css.map*/

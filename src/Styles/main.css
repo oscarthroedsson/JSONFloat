@@ -1,0 +1,24 @@
+:root {
+  --color-key: #db2777;
+  --color-heading: #27272a;
+  --color-text: #3f3f46;
+
+  --color-number: #93c5fd;
+  --color-string: #86efac;
+  --color-boolean: #d8b4fe;
+  --color-null: #fca5a5;
+  --color-undefined: #b91c1c;
+
+  --color-object: #d6d3d1;
+  --color-array: #fcd34d;
+
+  --text-size-xs: 0.5rem; /* 8px */
+  --text-size-sm: 0.625rem; /* 10px */
+  --text-size-md: 0.75rem; /* 12px */
+  --text-size-lg: 0.875rem; /* 14px */
+  --text-size-xl: 1rem; /*16px*/
+  --text-size-2xl: 1, 125rem; /* 18px */
+  --text-size-3xl: 1, 25rem; /* 20px */
+  --text-size-4xl: 1, 375rem; /* 22px */
+  --text-size-5xl: 1, 5rem; /* 24px */
+}

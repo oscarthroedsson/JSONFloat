@@ -1,6 +1,6 @@
 /* [project]/src/app/editor/editorStyle.module.css [app-client] (css) */
 .editorStyle-module__g5GrRa__editor {
-  grid-template-rows: 100vh 100vh;
+  grid-template-rows: 1fr;
   grid-template-columns: minmax(10vw, 30%) 1fr;
   height: 100vh;
   display: grid;

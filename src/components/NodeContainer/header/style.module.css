@@ -1,0 +1,26 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: var(--spacing-sm) var(--spacing-none);
+
+  & .label {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: var(--spacing-xs);
+
+    font-weight: 600;
+    color: var(--color-text);
+
+    & :is(svg) {
+      width: 16px;
+    }
+  }
+
+  & > p:last-child {
+    font-size: var(--text-size-sm);
+    font-weight: 200;
+  }
+}
