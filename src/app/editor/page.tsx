@@ -1,21 +1,27 @@
 // app/home/page.tsx
 "use client";
 import styles from "./editorStyle.module.css";
-import { Canvas } from "reaflow";
-
+import { Canvas, ElkRoot } from "reaflow";
+import { Space, ViewPort } from "react-zoomable-ui";
 import { useJsonGraph } from "@/hooks/useJsonGraph";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import JSONEditor from "@/components/editors/JsonEditor";
 
 import { CustomNode } from "@/components/customnode/customNode";
 
 import { extractFormattedNodeData } from "@/utils/formatNodeToTextContent";
 import { calculateNodeSizeFromText } from "@/utils/calculateNodeSize";
+import { useCanvasView } from "@/store/useCanvasView";
+import { debounce } from "@/utils/debounce";
+import SidePanel from "@/components/sidePanel/SidePanel";
 
 export default function HomePage() {
   const { nodes, edges, handleChange } = useJsonGraph();
-  const [paneWidth, setPaneWidth] = useState(1200);
-  const [paneHeight, setPaneHeight] = useState(800);
+  const [paneWidth, setPaneWidth] = useState(0);
+  const [paneHeight, setPaneHeight] = useState(0);
+
+  const { setView, setViewCenter, view } = useCanvasView();
+  const refCanvasCol = useRef<null | HTMLDivElement>(null); // let us set canvas size at first render
 
   const reaflowEdges = useMemo(() => {
     return edges.map((edge) => ({
@@ -39,38 +45,67 @@ export default function HomePage() {
     });
   }, [nodes]);
 
-  const onLayoutChange = useCallback((layout) => {
-    if (!nodes || !edges) return;
-    setPaneWidth(layout.width + 50);
-    setPaneHeight(layout.height + 50);
-    setTimeout(() => {
-      window.requestAnimationFrame(() => {
-        centerView();
-      });
-    });
+  useEffect(() => {
+    // set canvas at right height in the beginning
+    if (!refCanvasCol.current) return;
+    setPaneWidth(refCanvasCol.current.offsetWidth);
+    setPaneHeight(refCanvasCol.current.offsetHeight);
   }, []);
+
+  const onLayoutChange = useCallback(
+    (layout: ElkRoot) => {
+      if (layout.width && layout.height) {
+        setPaneWidth(layout.width);
+        setPaneHeight(layout.height);
+      }
+
+      if (!refCanvasCol.current) return;
+
+      // Centrera innehållet med t.ex. 80% zoom
+      setTimeout(() => {
+        setViewCenter();
+      }, 0);
+    },
+    [setViewCenter]
+  );
 
   return (
     <div className={styles.editor}>
-      <div className={styles.editorPanel}>
+      <SidePanel className={styles.editorPanel}>
         <JSONEditor handleChange={handleChange} />
-      </div>
-      <div className={styles.canvasPanel}>
-        <Canvas
-          nodes={reaflowNodes}
-          edges={reaflowEdges}
-          direction="RIGHT"
-          pannable={true}
-          zoomable={true}
-          fit={true}
-          width={paneWidth}
-          height={paneHeight}
-          maxWidth={paneWidth}
-          maxHeight={paneHeight}
-          onLayoutChange={onLayoutChange}
-          /* ...resten av props... */
-          node={(nodeProps) => <CustomNode {...nodeProps} />}
-        />
+      </SidePanel>
+      <div ref={refCanvasCol} className={styles.canvasPanel}>
+        <Space
+          onUpdated={() => debounce(() => setView(view as ViewPort), 200)}
+          onContextMenu={(e) => {
+            console.log("context is run");
+            e.preventDefault();
+          }}
+          style={{ width: "100%", height: "100%", overflow: "visible" }}
+          onCreate={setView}
+          treatTwoFingerTrackPadGesturesLikeTouch={false}
+          pollForElementResizing
+        >
+          <Canvas
+            className={styles.canvas}
+            nodes={reaflowNodes}
+            edges={reaflowEdges}
+            direction="RIGHT"
+            pannable={true}
+            zoomable={false}
+            animated={false}
+            readonly={true}
+            dragEdge={null}
+            dragNode={null}
+            fit={true}
+            width={paneWidth}
+            height={paneHeight}
+            maxWidth={paneWidth}
+            maxHeight={paneHeight}
+            onLayoutChange={onLayoutChange}
+            node={(nodeProps) => <CustomNode {...nodeProps} />}
+          />
+        </Space>
       </div>
     </div>
   );

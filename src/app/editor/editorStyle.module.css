@@ -3,15 +3,32 @@
   grid-template-columns: 30% 1fr;
   grid-template-rows: 1fr;
   height: 100vh;
-  overflow: none;
+  overflow: hidden;
 }
 
 .editorPanel {
   height: 100vh;
-  overflow: auto; /* Scroll inuti Monaco om den överflödar */
 }
 
 .canvasPanel {
+  background-color: lightblue;
+  position: relative;
   height: 100vh;
-  overflow: auto; /* Ger scroll om Canvas är större än sin wrapper */
+  overflow: hidden;
+  cursor: grab !important;
+}
+
+.canvas {
+  width: max-content;
+  height: max-content;
+
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  background-color: lightgreen;
+
+  &:active {
+    cursor: grabbing;
+  }
 }

@@ -1,0 +1,32 @@
+/* [project]/src/components/sidePanel/style.module.css [app-client] (css) */
+.style-module__TDKHoa__sidePanel {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__head {
+  background-color: #ffb6c1;
+  justify-content: start;
+  align-items: center;
+  padding: 8px;
+  display: flex;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__body {
+  height: 100%;
+  padding-block: 8px;
+  overflow-y: auto;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__foot {
+  background-color: #f08080;
+  justify-content: start;
+  align-items: center;
+  height: 5dvh;
+  padding: 8px;
+  display: flex;
+  position: sticky;
+  bottom: 0;
+}
+
+/*# sourceMappingURL=src_components_sidePanel_style_module_css_f9ee138c._.single.css.map*/

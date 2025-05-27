@@ -1,0 +1,183 @@
+/* [project]/src/app/editor/editorStyle.module.css [app-client] (css) */
+.editorStyle-module__g5GrRa__editor {
+  grid-template-rows: 1fr;
+  grid-template-columns: 30% 1fr;
+  height: 100vh;
+  display: grid;
+  overflow: hidden;
+}
+
+.editorStyle-module__g5GrRa__editorPanel {
+  height: 100vh;
+}
+
+.editorStyle-module__g5GrRa__canvasPanel {
+  background-color: #add8e6;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: grab !important;
+}
+
+.editorStyle-module__g5GrRa__canvas {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  background-color: #90ee90;
+  width: max-content;
+  height: max-content;
+  overflow: auto;
+}
+
+.editorStyle-module__g5GrRa__canvas:active {
+  cursor: grabbing;
+}
+
+
+/* [project]/src/components/NodeContainer/PrimativeValue/style.module.css [app-client] (css) */
+.style-module__Ah7F4W__primativeValueContainer {
+  row-gap: var(--gap-container-xs);
+  padding: var(--spacing-sm) var(--spacing-none);
+  color: var(--color-text);
+  background-color: #f1f5f9;
+  border-radius: 4px;
+  grid-template-rows: repeat(2, auto);
+  grid-template-columns: 1fr;
+  display: grid;
+}
+
+.style-module__Ah7F4W__primativeValueContainer > * {
+  padding-inline: var(--spacing-sm);
+}
+
+.style-module__Ah7F4W__primativeValueContainer .style-module__Ah7F4W__keyPairValue {
+  width: 100%;
+  font-size: var(--text-size-md);
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  display: flex;
+}
+
+.style-module__Ah7F4W__primativeValueContainer .style-module__Ah7F4W__keyValue {
+  color: var(--color-key);
+}
+
+.style-module__Ah7F4W__primativeValueContainer .style-module__Ah7F4W__footer {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+
+/* [project]/src/components/NodeContainer/BreakOuts/BreakOutList/style.module.css [app-client] (css) */
+.style-module__REhfCG__breakOutList > :not(:last-child) {
+  margin-bottom: 4px;
+}
+
+
+/* [project]/src/components/NodeContainer/BreakOuts/BreakOutItem/style.module.css [app-client] (css) */
+.style-module__RRdZ_q__breakOutItem {
+  color: var(--color-text);
+  padding: 0px var(--spacing-sm);
+  font-size: var(--text-size-md);
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  display: flex;
+}
+
+.style-module__RRdZ_q__breakOutItem > :first-child {
+  justify-content: start;
+  align-items: center;
+  gap: var(--spacing-xs);
+  display: flex;
+}
+
+.style-module__RRdZ_q__breakOutItem > :first-child :is(svg) {
+  width: 14px;
+}
+
+.style-module__RRdZ_q__breakOutItem > :last-child {
+  justify-content: end;
+  align-items: center;
+  display: flex;
+}
+
+
+/* [project]/src/components/NodeContainer/header/style.module.css [app-client] (css) */
+.style-module__XiYRiW__header {
+  padding: var(--spacing-sm) var(--spacing-none);
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.style-module__XiYRiW__header .style-module__XiYRiW__label {
+  justify-content: start;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--color-text);
+  font-weight: 600;
+  display: flex;
+}
+
+.style-module__XiYRiW__header .style-module__XiYRiW__label :is(svg) {
+  width: 16px;
+}
+
+.style-module__XiYRiW__header > p:last-child {
+  font-size: var(--text-size-sm);
+  font-weight: 200;
+}
+
+
+/* [project]/src/components/NodeContainer/PrimativeValueList/style.module.css [app-client] (css) */
+.style-module__GwIHia__primativeValueList > :not(:last-child) {
+  margin-bottom: 4px;
+}
+
+
+/* [project]/src/components/NodeContainer/style.module.css [app-client] (css) */
+.style-module__ZC0-Xa__nodeContainer {
+  padding: var(--spacing-sm);
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  height: fit-content;
+  position: fixed;
+}
+
+
+/* [project]/src/components/sidePanel/style.module.css [app-client] (css) */
+.style-module__TDKHoa__sidePanel {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__head {
+  background-color: #ffb6c1;
+  justify-content: start;
+  align-items: center;
+  padding: 8px;
+  display: flex;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__body {
+  height: 100%;
+  padding-block: 8px;
+  overflow-y: auto;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__foot {
+  background-color: #f08080;
+  justify-content: start;
+  align-items: center;
+  height: 5dvh;
+  padding: 8px;
+  display: flex;
+  position: sticky;
+  bottom: 0;
+}
+
+
+/*# sourceMappingURL=src_851969ff._.css.map*/

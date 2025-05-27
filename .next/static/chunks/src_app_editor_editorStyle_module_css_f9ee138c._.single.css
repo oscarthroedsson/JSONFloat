@@ -1,15 +1,36 @@
 /* [project]/src/app/editor/editorStyle.module.css [app-client] (css) */
 .editorStyle-module__g5GrRa__editor {
-  height: 100vh;
-  overflow: none;
   grid-template-rows: 1fr;
   grid-template-columns: 30% 1fr;
+  height: 100vh;
   display: grid;
+  overflow: hidden;
 }
 
-.editorStyle-module__g5GrRa__editorPanel, .editorStyle-module__g5GrRa__canvasPanel {
+.editorStyle-module__g5GrRa__editorPanel {
   height: 100vh;
+}
+
+.editorStyle-module__g5GrRa__canvasPanel {
+  background-color: #add8e6;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: grab !important;
+}
+
+.editorStyle-module__g5GrRa__canvas {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  background-color: #90ee90;
+  width: max-content;
+  height: max-content;
   overflow: auto;
+}
+
+.editorStyle-module__g5GrRa__canvas:active {
+  cursor: grabbing;
 }
 
 /*# sourceMappingURL=src_app_editor_editorStyle_module_css_f9ee138c._.single.css.map*/

@@ -1,0 +1,30 @@
+.sidePanel {
+  height: 100%;
+  overflow-y: auto;
+  .head {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px;
+
+    background-color: lightpink;
+  }
+
+  .body {
+    height: 100%;
+    overflow-y: auto;
+    padding-block: 8px;
+  }
+  .foot {
+    position: sticky;
+    bottom: 0;
+    height: 5dvh;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 8px;
+
+    background-color: lightcoral;
+  }
+}
