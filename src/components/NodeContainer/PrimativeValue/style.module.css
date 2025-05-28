@@ -9,6 +9,7 @@
   background-color: #f1f5f9;
   border-radius: 4px;
   color: var(--color-text);
+  font-family: "Poppins";
 
   > * {
     padding-inline: var(--spacing-sm);
@@ -21,7 +22,7 @@
     width: 100%;
 
     font-size: var(--text-size-md);
-    font-weight: 500;
+    font-weight: 400;
   }
 
   & .keyValue {

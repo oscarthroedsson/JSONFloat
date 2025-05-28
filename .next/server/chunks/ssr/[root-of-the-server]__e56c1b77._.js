@@ -48,10 +48,7 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constant$2f$dataValuesConstant$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/constant/dataValuesConstant.ts [app-ssr] (ecmascript)");
 ;
 function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
-    if (typeof input !== "object" || input === null) return {
-        nodes,
-        edges
-    };
+    // if (typeof input !== "object" || input === null) return { nodes, edges };
     // Current node we looping over
     const currentNode = {
         id: parentPath,
@@ -73,12 +70,12 @@ function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
                     key: null,
                     value: String(item),
                     valueType: type
-                });
+                }); // no key on Primative values
                 if (!itemVariationsMap.has("items")) itemVariationsMap.set("items", new Set());
                 itemVariationsMap.get("items").add(type);
             } else if (typeof item === "object" && !Array.isArray(item)) {
                 const itemKeys = Object.keys(item);
-                // 1. Backpatch för nya keys vi tidigare inte sett
+                // Backpatch for new keys we haven´t seen
                 for (const k of itemKeys){
                     if (!knownKeys.has(k) && index > 0) {
                         itemVariationsMap.set(k, new Set([
@@ -90,12 +87,13 @@ function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
                         ]));
                     }
                 }
-                // 3. Uppdatera knownKeys
+                // 3. Update knownKeys
                 itemKeys.forEach((k)=>knownKeys.add(k));
                 const itemPath = `${parentPath}[${index}]`;
+                // Objects in array with no keyName
                 currentNode.breakouts.push({
-                    key,
-                    type: "object",
+                    key: `index ${key}`,
+                    type: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constant$2f$dataValuesConstant$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ALLDATVALUE_CONSTANT"].object,
                     items: itemKeys.length
                 });
                 edges.push({
@@ -104,12 +102,15 @@ function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
                     to: itemPath
                 });
                 extractNodes(item, itemPath, nodes, edges);
+            } else {
+                currentNode.breakouts.push({
+                    key,
+                    type: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constant$2f$dataValuesConstant$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ALLDATVALUE_CONSTANT"].array,
+                    items: item.length
+                });
             }
         });
-        // Skriv ut till variations
-        itemVariationsMap.forEach((types, key)=>{
-            currentNode.variations[key] = Array.from(types);
-        });
+        itemVariationsMap.forEach((types, key)=>currentNode.variations[key] = Array.from(types));
     } else {
         // Handle object
         const entries = Object.entries(input);
@@ -133,13 +134,12 @@ function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
                     from: parentPath,
                     to: fullPath
                 });
-                // Pass the array directly, don't wrap it
-                extractNodes(value, fullPath, nodes, edges);
+                extractNodes(value, fullPath, nodes, edges); // Pass the array directly, don't wrap it
             } else if (typeof value === "object" && value !== null) {
                 currentNode.breakouts?.push({
                     key,
                     type: "object",
-                    items: Object.values(key).length
+                    items: Object.keys(value).length
                 });
                 edges.push({
                     id: `${parentPath}->${fullPath}`,
@@ -458,7 +458,7 @@ function PrimativeValue({ ...props }) {
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        children: props.valueType
+                        children: props.value
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
                         lineNumber: 15,
@@ -492,7 +492,7 @@ function PrimativeValue({ ...props }) {
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                         className: "tag tagline lg",
-                        "data-datavalue": `${props.value}`
+                        "data-datavalue": `${props.valueType}`
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
                         lineNumber: 26,
@@ -688,6 +688,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$Icons$2
 ;
 ;
 function NCHeader({ ...props }) {
+    console.log("🐲 [NCHeader] props.type: ", props.type);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("header", {
         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$NodeContainer$2f$header$2f$style$2e$module$2e$css__$5b$app$2d$ssr$5d$__$28$css__module$29$__["default"].header,
         children: [
@@ -698,33 +699,33 @@ function NCHeader({ ...props }) {
                         name: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$constant$2f$brandIcons$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["JSONFloatIconNames"][props.type]
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/header/NCHeader.tsx",
-                        lineNumber: 14,
+                        lineNumber: 15,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                         children: props.label
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/header/NCHeader.tsx",
-                        lineNumber: 15,
+                        lineNumber: 16,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/NodeContainer/header/NCHeader.tsx",
-                lineNumber: 13,
+                lineNumber: 14,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
                 children: props.type
             }, void 0, false, {
                 fileName: "[project]/src/components/NodeContainer/header/NCHeader.tsx",
-                lineNumber: 17,
+                lineNumber: 18,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/NodeContainer/header/NCHeader.tsx",
-        lineNumber: 12,
+        lineNumber: 13,
         columnNumber: 5
     }, this);
 }
@@ -911,8 +912,8 @@ __turbopack_context__.s({
     "NODE_CONFIG": (()=>NODE_CONFIG)
 });
 const NODE_CONFIG = {
-    heightHeader: 44,
-    heightItem: 40
+    heightHeader: 40,
+    heightItem: 46
 };
 }}),
 "[project]/src/utils/StyleObjects/breakOutItem.ts [app-ssr] (ecmascript)": ((__turbopack_context__) => {

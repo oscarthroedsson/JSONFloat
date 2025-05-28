@@ -1,4 +1,4 @@
 export const NODE_CONFIG = {
-  heightHeader: 44,
-  heightItem: 40,
+  heightHeader: 40,
+  heightItem: 46,
 };

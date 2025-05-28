@@ -8,6 +8,7 @@ interface NCHeaderProps {
 }
 
 export default function NCHeader({ ...props }: NCHeaderProps) {
+  console.log("🐲 [NCHeader] props.type: ", props.type);
   return (
     <header className={style.header}>
       <div className={style.label}>

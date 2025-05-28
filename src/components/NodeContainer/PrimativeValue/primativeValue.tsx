@@ -2,8 +2,8 @@ import style from "./style.module.css";
 
 interface PrimativeValueProps {
   keyName: string;
-  value: string | undefined;
-  valueType: string | undefined;
+  value: string | undefined; // the item-data
+  valueType: string | undefined; // primative values string | number etc...
   variations: string[];
 }
 
@@ -12,7 +12,7 @@ export default function PrimativeValue({ ...props }: PrimativeValueProps) {
     <div className={style.primativeValueContainer}>
       <div className={style.keyPairValue}>
         <p className={style.keyValue}>{props.keyName}</p>
-        <p>{props.valueType}</p>
+        <p>{props.value}</p>
       </div>
 
       <div className={style.footer}>
@@ -23,7 +23,7 @@ export default function PrimativeValue({ ...props }: PrimativeValueProps) {
             })}
         </div>
 
-        <span className="tag tagline lg" data-datavalue={`${props.value}`} />
+        <span className="tag tagline lg" data-datavalue={`${props.valueType}`} />
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ export function extractNodes(
   nodes: ParsedNode[] = [],
   edges: ParsedEdge[] = []
 ): { nodes: ParsedNode[]; edges: ParsedEdge[] } {
-  if (typeof input !== "object" || input === null) return { nodes, edges };
+  // if (typeof input !== "object" || input === null) return { nodes, edges };
 
   // Current node we looping over
   const currentNode: ParsedNode = {
@@ -29,14 +29,13 @@ export function extractNodes(
 
       if (isPrimitive(item)) {
         const type = getDataType(item);
-        currentNode.data.push({ key: null, value: String(item), valueType: type });
-
+        currentNode.data.push({ key: null, value: String(item), valueType: type }); // no key on Primative values
         if (!itemVariationsMap.has("items")) itemVariationsMap.set("items", new Set());
         itemVariationsMap.get("items")!.add(type);
       } else if (typeof item === "object" && !Array.isArray(item)) {
         const itemKeys = Object.keys(item);
 
-        // 1. Backpatch för nya keys vi tidigare inte sett
+        // Backpatch for new keys we haven´t seen
         for (const k of itemKeys) {
           if (!knownKeys.has(k) && index > 0) {
             itemVariationsMap.set(k, new Set(["undefined"]));
@@ -45,25 +44,29 @@ export function extractNodes(
           }
         }
 
-        // 3. Uppdatera knownKeys
+        // 3. Update knownKeys
         itemKeys.forEach((k) => knownKeys.add(k));
-
         const itemPath = `${parentPath}[${index}]`;
 
+        // Objects in array with no keyName
         currentNode.breakouts.push({
-          key,
-          type: "object",
+          key: `index ${key}`,
+          type: ALLDATVALUE_CONSTANT.object,
           items: itemKeys.length,
         });
+
         edges.push({ id: `${parentPath}->${itemPath}`, from: parentPath, to: itemPath });
         extractNodes(item, itemPath, nodes, edges);
+      } else {
+        currentNode.breakouts.push({
+          key,
+          type: ALLDATVALUE_CONSTANT.array,
+          items: item.length,
+        });
       }
     });
 
-    // Skriv ut till variations
-    itemVariationsMap.forEach((types, key) => {
-      currentNode.variations[key] = Array.from(types);
-    });
+    itemVariationsMap.forEach((types, key) => (currentNode.variations[key] = Array.from(types)));
   } else {
     // Handle object
     const entries = Object.entries(input as Record<string, unknown>);
@@ -82,10 +85,10 @@ export function extractNodes(
       } else if (Array.isArray(value)) {
         currentNode.breakouts?.push({ key, type: "array", items: key.length });
         edges.push({ id: `${parentPath}->${fullPath}`, from: parentPath, to: fullPath });
-        // Pass the array directly, don't wrap it
-        extractNodes(value, fullPath, nodes, edges);
+
+        extractNodes(value, fullPath, nodes, edges); // Pass the array directly, don't wrap it
       } else if (typeof value === "object" && value !== null) {
-        currentNode.breakouts?.push({ key, type: "object", items: Object.values(key).length });
+        currentNode.breakouts?.push({ key, type: "object", items: Object.keys(value).length });
         edges.push({ id: `${parentPath}->${fullPath}`, from: parentPath, to: fullPath });
         extractNodes(value, fullPath, nodes, edges);
       }
