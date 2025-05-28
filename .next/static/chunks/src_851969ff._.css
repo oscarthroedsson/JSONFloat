@@ -81,10 +81,11 @@
 .style-module__RRdZ_q__breakOutItem {
   color: var(--color-text);
   padding: 0px var(--spacing-sm);
+  font-family: Poppins;
   font-size: var(--text-size-md);
   justify-content: space-between;
   align-items: center;
-  font-weight: 500;
+  font-weight: 400;
   display: flex;
 }
 

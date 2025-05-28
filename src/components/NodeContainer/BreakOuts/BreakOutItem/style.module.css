@@ -6,8 +6,9 @@
   color: var(--color-text);
   padding: 0px var(--spacing-sm);
 
+  font-family: Poppins;
   font-size: var(--text-size-md);
-  font-weight: 500;
+  font-weight: 400;
 
   & > :first-child {
     display: flex;
