@@ -1,0 +1,69 @@
+/* [project]/src/app/editor/editorStyle.module.css [app-client] (css) */
+.editorStyle-module__g5GrRa__editor {
+  grid-template-rows: 1fr;
+  grid-template-columns: 30% 1fr;
+  height: 100vh;
+  display: grid;
+  overflow: hidden;
+}
+
+.editorStyle-module__g5GrRa__editorPanel {
+  height: 100vh;
+}
+
+.editorStyle-module__g5GrRa__canvasPanel {
+  background-color: #add8e6;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  cursor: grab !important;
+}
+
+.editorStyle-module__g5GrRa__canvas {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  background-color: #90ee90;
+  width: max-content;
+  height: max-content;
+  overflow: auto;
+}
+
+.editorStyle-module__g5GrRa__canvas:active {
+  cursor: grabbing;
+}
+
+
+/* [project]/src/components/sidePanel/style.module.css [app-client] (css) */
+.style-module__TDKHoa__sidePanel {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__head {
+  background-color: #ffb6c1;
+  justify-content: start;
+  align-items: center;
+  padding: 8px;
+  display: flex;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__body {
+  height: 100%;
+  padding-block: 8px;
+  overflow-y: auto;
+}
+
+.style-module__TDKHoa__sidePanel .style-module__TDKHoa__foot {
+  background-color: #f08080;
+  justify-content: start;
+  align-items: center;
+  height: 5dvh;
+  padding: 8px;
+  display: flex;
+  position: sticky;
+  bottom: 0;
+}
+
+
+/*# sourceMappingURL=src_5d53507c._.css.map*/

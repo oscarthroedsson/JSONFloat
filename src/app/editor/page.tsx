@@ -7,7 +7,7 @@ import { useJsonGraph } from "@/hooks/useJsonGraph";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import JSONEditor from "@/components/editors/JsonEditor";
 
-import { CustomNode } from "@/components/customnode/customNode";
+import { BaseNode } from "@/components/customnode/BaseNode";
 
 import { extractFormattedNodeData } from "@/utils/formatNodeToTextContent";
 import { calculateNodeSizeFromText } from "@/utils/calculateNodeSize";
@@ -78,7 +78,6 @@ export default function HomePage() {
         <Space
           onUpdated={() => debounce(() => setView(view as ViewPort), 200)}
           onContextMenu={(e) => {
-            console.log("context is run");
             e.preventDefault();
           }}
           style={{ width: "100%", height: "100%", overflow: "visible" }}
@@ -103,7 +102,7 @@ export default function HomePage() {
             maxWidth={paneWidth}
             maxHeight={paneHeight}
             onLayoutChange={onLayoutChange}
-            node={(nodeProps) => <CustomNode {...nodeProps} />}
+            node={(nodeProps) => <BaseNode {...nodeProps} />}
           />
         </Space>
       </div>

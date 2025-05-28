@@ -7,8 +7,10 @@ import { Fragment } from "react";
 import NCHeader from "../NodeContainer/header/NCHeader";
 import PrimativeValueList from "../NodeContainer/PrimativeValueList/PrimativeValueList";
 import style from "@/components/NodeContainer/style.module.css";
-export function CustomNode(props: NodeProps) {
-  const data = props.properties?.data;
+import { ParsedNode } from "@/types/node.types";
+
+export function BaseNode(props: NodeProps) {
+  const data = props.properties?.data as ParsedNode;
 
   return (
     <Node
@@ -29,10 +31,16 @@ export function CustomNode(props: NodeProps) {
             backgroundColor: "white",
           }}
         >
-          <NCHeader type={data.type} label={data.label} />
+          <NCHeader type={data.type as "array" | "object"} label={data.label} />
           <PrimativeValueList>
             {data.data?.map((item, index) => (
-              <PrimativeValue key={index} keyName={item.key} value={item.value} dataType={item.dataType} />
+              <PrimativeValue
+                key={index}
+                keyName={item.key}
+                value={item.value}
+                valueType={item.valueType}
+                variations={data.variations[item.key]}
+              />
             ))}
           </PrimativeValueList>
           <BreakOutsList>

@@ -15,15 +15,6 @@ export function extractFormattedNodeData(node: ParsedNode): {
     type: b.type,
   }));
 
-  /*
-  
-  
-  → Är en Array
-  → → I
-  
-  
-  */
-
   return {
     type,
     label,

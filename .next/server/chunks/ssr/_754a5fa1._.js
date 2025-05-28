@@ -205,6 +205,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$NodeCon
 ;
 ;
 function PrimativeValue({ ...props }) {
+    console.log("props.variations: ", props.variations);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$NodeContainer$2f$PrimativeValue$2f$style$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].primativeValueContainer,
         children: [
@@ -216,20 +217,20 @@ function PrimativeValue({ ...props }) {
                         children: props.keyName
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 13,
+                        lineNumber: 15,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        children: props.dataType
+                        children: props.valueType
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 14,
+                        lineNumber: 16,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                lineNumber: 12,
+                lineNumber: 14,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -237,23 +238,19 @@ function PrimativeValue({ ...props }) {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "tagVariationsContainer",
-                        children: [
-                            "string",
-                            "number",
-                            "null"
-                        ].map((value, index)=>{
+                        children: props.variations.map((value, index)=>{
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "tag tagline sm",
-                                "data-datavalue": `${props.value}`
+                                "data-datavalue": `${value}`
                             }, index, false, {
                                 fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                                lineNumber: 20,
+                                lineNumber: 22,
                                 columnNumber: 20
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 18,
+                        lineNumber: 20,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -261,19 +258,19 @@ function PrimativeValue({ ...props }) {
                         "data-datavalue": `${props.value}`
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 24,
+                        lineNumber: 26,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                lineNumber: 17,
+                lineNumber: 19,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-        lineNumber: 11,
+        lineNumber: 13,
         columnNumber: 5
     }, this);
 }

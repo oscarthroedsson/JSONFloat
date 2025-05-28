@@ -26,18 +26,6 @@
   },
   "skills": ["JavaScript", "TypeScript", "React", "Node.js"],
   "scoreHistory": [95, 87, 78, 99, 85, 92],
-  "uniformObjectsExact": [
-    { "type": "fruit", "name": "apple" },
-    { "type": "fruit", "name": "apple" },
-    { "type": "fruit", "name": "apple" }
-  ],
-
-  "uniformObjects": [
-    { "id": 1, "label": "One" },
-    { "id": 2, "label": "Two" },
-    { "id": 3, "label": "Three" }
-  ],
-
   "stringArray": ["alpha", "beta", "gamma", "delta"],
   "numberArray": [1, 2, 3, 4, 5, 6, 7],
   "mixedArray": ["hello", 42, true, null, { "nested": "object", "value": [1, 2, 3] }, [true, false]],
@@ -59,6 +47,29 @@
         "stars": 250,
         "forks": 5
       }
+    }
+  ],
+  "uniformObjects": [
+    { "id": 1, "label": "One" },
+    { "id": 2, "label": "Two" },
+    { "id": 3, "label": "Three" }
+  ],
+  "uniformObjectsExact": [
+    { "type": "fruit", "name": "apple" },
+    { "type": "fruit", "name": "apple" },
+    { "type": "fruit", "name": "apple" }
+  ],
+  "missingKeysVariationTest": [
+    {
+      "name": "Oscar",
+      "age": 32
+    },
+    {
+      "name": "Throedsson"
+    },
+    {
+      "age": 28,
+      "active": true
     }
   ]
 }

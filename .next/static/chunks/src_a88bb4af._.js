@@ -27,32 +27,47 @@ function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
     // Current node we looping over
     const currentNode = {
         id: parentPath,
+        onKey: parentPath.split(".").pop() || parentPath,
         label: parentPath.split(".").pop() || parentPath,
         data: [],
-        breakouts: []
+        breakouts: [],
+        variations: {}
     };
     if (Array.isArray(input)) {
-        // Handle array directly
-        currentNode.label = `${currentNode.label}`;
-        // Process each array item
+        const itemVariationsMap = new Map();
+        const knownKeys = new Set();
         input.forEach((item, index)=>{
-            const itemPath = `${parentPath}[${index}]`;
+            const key = index.toString();
             if (isPrimitive(item)) {
+                const type = getDataType(item);
                 currentNode.data.push({
-                    key: index.toString(),
+                    key,
                     value: String(item),
-                    dataType: getDataType(item),
-                    variations: []
+                    valueType: type
                 });
-            } else {
-                // For non-primitive items, create breakouts
-                const key = index.toString();
-                const type = Array.isArray(item) ? "array" : "object";
-                const items = Array.isArray(item) ? item.length : Object.values(item).length;
-                currentNode.breakouts?.push({
-                    key: key,
-                    type: type,
-                    items: items
+                if (!itemVariationsMap.has("items")) itemVariationsMap.set("items", new Set());
+                itemVariationsMap.get("items").add(type);
+            } else if (typeof item === "object" && !Array.isArray(item)) {
+                const itemKeys = Object.keys(item);
+                // 1. Backpatch för nya keys vi tidigare inte sett
+                for (const k of itemKeys){
+                    if (!knownKeys.has(k) && index > 0) {
+                        itemVariationsMap.set(k, new Set([
+                            "undefined"
+                        ]));
+                    } else {
+                        itemVariationsMap.set(k, new Set([
+                            "undefined"
+                        ]));
+                    }
+                }
+                // 3. Uppdatera knownKeys
+                itemKeys.forEach((k)=>knownKeys.add(k));
+                const itemPath = `${parentPath}[${index}]`;
+                currentNode.breakouts.push({
+                    key,
+                    type: "object",
+                    items: itemKeys.length
                 });
                 edges.push({
                     id: `${parentPath}->${itemPath}`,
@@ -62,17 +77,21 @@ function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
                 extractNodes(item, itemPath, nodes, edges);
             }
         });
+        // Skriv ut till variations
+        itemVariationsMap.forEach((types, key)=>{
+            currentNode.variations[key] = Array.from(types);
+        });
     } else {
         // Handle object
         const entries = Object.entries(input);
         for (const [key, value] of entries){
             const fullPath = `${parentPath}.${key}`;
+            addVariationsToNode(currentNode.variations, key, getDataType(value));
             if (isPrimitive(value)) {
                 currentNode.data.push({
                     key,
                     value: String(value),
-                    dataType: getDataType(value),
-                    variations: []
+                    valueType: getDataType(value)
                 });
             } else if (Array.isArray(value)) {
                 currentNode.breakouts?.push({
@@ -111,25 +130,15 @@ function extractNodes(input, parentPath = "root", nodes = [], edges = []) {
 function isPrimitive(value) {
     return typeof value === "string" || typeof value === "number" || typeof value === "boolean" || value === null;
 }
-// function getObjectDataType(value: unknown) {
-//   if (Array.isArray(value)) return "array";
-//   return "object";
-// }
-// function getObjectDataLength(value: object) {
-//   if (Array.isArray(value)) {
-//     return value.length;
-//   } else {
-//     return Object.keys(value).length;
-//   }
-// }
-// function getPrimitiveType(value: unknown): dataValues {
-//   if (typeof value === "string") return "string";
-//   if (typeof value === "number") return "number";
-//   if (value === null) return "null";
-//   if (value === undefined) return "undefined";
-//   if (Array.isArray(value)) return "array";
-//   return "object";
-// }
+function addVariationsToNode(record, key, valueType) {
+    if (!record[key]) {
+        record[key] = [
+            valueType
+        ];
+    } else if (!record[key].includes(valueType)) {
+        record[key].push(valueType);
+    }
+}
 function getDataType(value) {
     if (typeof value === "string") return "string";
     if (typeof value === "number") return "number";
@@ -313,7 +322,7 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-__turbopack_context__.v(JSON.parse("{\"user\":{\"id\":123,\"name\":\"Oscar Throedsson\",\"email\":\"oscar@example.com\",\"isActive\":true,\"age\":32,\"bio\":null,\"location\":{\"city\":\"Malmö\",\"country\":\"Sweden\",\"coordinates\":{\"lat\":55.604981,\"lng\":13.003822}},\"preferences\":{\"theme\":\"dark\",\"language\":\"sv\",\"notifications\":{\"email\":true,\"sms\":false,\"push\":true}}},\"skills\":[\"JavaScript\",\"TypeScript\",\"React\",\"Node.js\"],\"scoreHistory\":[95,87,78,99,85,92],\"uniformObjectsExact\":[{\"type\":\"fruit\",\"name\":\"apple\"},{\"type\":\"fruit\",\"name\":\"apple\"},{\"type\":\"fruit\",\"name\":\"apple\"}],\"uniformObjects\":[{\"id\":1,\"label\":\"One\"},{\"id\":2,\"label\":\"Two\"},{\"id\":3,\"label\":\"Three\"}],\"stringArray\":[\"alpha\",\"beta\",\"gamma\",\"delta\"],\"numberArray\":[1,2,3,4,5,6,7],\"mixedArray\":[\"hello\",42,true,null,{\"nested\":\"object\",\"value\":[1,2,3]},[true,false]],\"emptyArray\":[],\"emptyObject\":{},\"projects\":[{\"title\":\"Sanitas Health\",\"stack\":[\"Node.js\",\"React\",\"MongoDB\"],\"meta\":{\"stars\":420,\"forks\":12}},{\"title\":\"TypeHub\",\"stack\":[\"Next.js\",\"TypeScript\"],\"meta\":{\"stars\":250,\"forks\":5}}]}"));}}),
+__turbopack_context__.v(JSON.parse("{\"user\":{\"id\":123,\"name\":\"Oscar Throedsson\",\"email\":\"oscar@example.com\",\"isActive\":true,\"age\":32,\"bio\":null,\"location\":{\"city\":\"Malmö\",\"country\":\"Sweden\",\"coordinates\":{\"lat\":55.604981,\"lng\":13.003822}},\"preferences\":{\"theme\":\"dark\",\"language\":\"sv\",\"notifications\":{\"email\":true,\"sms\":false,\"push\":true}}},\"skills\":[\"JavaScript\",\"TypeScript\",\"React\",\"Node.js\"],\"scoreHistory\":[95,87,78,99,85,92],\"stringArray\":[\"alpha\",\"beta\",\"gamma\",\"delta\"],\"numberArray\":[1,2,3,4,5,6,7],\"mixedArray\":[\"hello\",42,true,null,{\"nested\":\"object\",\"value\":[1,2,3]},[true,false]],\"emptyArray\":[],\"emptyObject\":{},\"projects\":[{\"title\":\"Sanitas Health\",\"stack\":[\"Node.js\",\"React\",\"MongoDB\"],\"meta\":{\"stars\":420,\"forks\":12}},{\"title\":\"TypeHub\",\"stack\":[\"Next.js\",\"TypeScript\"],\"meta\":{\"stars\":250,\"forks\":5}}],\"uniformObjects\":[{\"id\":1,\"label\":\"One\"},{\"id\":2,\"label\":\"Two\"},{\"id\":3,\"label\":\"Three\"}],\"uniformObjectsExact\":[{\"type\":\"fruit\",\"name\":\"apple\"},{\"type\":\"fruit\",\"name\":\"apple\"},{\"type\":\"fruit\",\"name\":\"apple\"}],\"missingKeysVariationTest\":[{\"name\":\"Oscar\",\"age\":32},{\"name\":\"Throedsson\"},{\"age\":28,\"active\":true}]}"));}}),
 "[project]/src/components/editors/JsonEditor.tsx [app-client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
@@ -440,20 +449,20 @@ function PrimativeValue({ ...props }) {
                         children: props.keyName
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 13,
+                        lineNumber: 14,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                        children: props.dataType
+                        children: props.valueType
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 14,
+                        lineNumber: 15,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                lineNumber: 12,
+                lineNumber: 13,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -461,23 +470,19 @@ function PrimativeValue({ ...props }) {
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "tagVariationsContainer",
-                        children: [
-                            "string",
-                            "number",
-                            "null"
-                        ].map((value, index)=>{
+                        children: props.variations && props.variations.map((value, index)=>{
                             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "tag tagline sm",
-                                "data-datavalue": `${props.value}`
+                                "data-datavalue": `${value}`
                             }, index, false, {
                                 fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                                lineNumber: 20,
-                                columnNumber: 20
+                                lineNumber: 22,
+                                columnNumber: 22
                             }, this);
                         })
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 18,
+                        lineNumber: 19,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -485,19 +490,19 @@ function PrimativeValue({ ...props }) {
                         "data-datavalue": `${props.value}`
                     }, void 0, false, {
                         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                        lineNumber: 24,
+                        lineNumber: 26,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-                lineNumber: 17,
+                lineNumber: 18,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/NodeContainer/PrimativeValue/primativeValue.tsx",
-        lineNumber: 11,
+        lineNumber: 12,
         columnNumber: 5
     }, this);
 }
@@ -848,22 +853,23 @@ function CustomNode(props) {
                         label: data.label
                     }, void 0, false, {
                         fileName: "[project]/src/components/customnode/customNode.tsx",
-                        lineNumber: 32,
+                        lineNumber: 33,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$NodeContainer$2f$PrimativeValueList$2f$PrimativeValueList$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                         children: data.data?.map((item, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$NodeContainer$2f$PrimativeValue$2f$primativeValue$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                 keyName: item.key,
                                 value: item.value,
-                                dataType: item.dataType
+                                valueType: item.valueType,
+                                variations: data.variations[item.key]
                             }, index, false, {
                                 fileName: "[project]/src/components/customnode/customNode.tsx",
-                                lineNumber: 35,
+                                lineNumber: 36,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/customnode/customNode.tsx",
-                        lineNumber: 33,
+                        lineNumber: 34,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$NodeContainer$2f$BreakOuts$2f$BreakOutList$2f$BreakOutsList$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -872,33 +878,33 @@ function CustomNode(props) {
                                     item: item
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/customnode/customNode.tsx",
-                                    lineNumber: 41,
+                                    lineNumber: 48,
                                     columnNumber: 17
                                 }, this)
                             }, index, false, {
                                 fileName: "[project]/src/components/customnode/customNode.tsx",
-                                lineNumber: 40,
+                                lineNumber: 47,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/components/customnode/customNode.tsx",
-                        lineNumber: 38,
+                        lineNumber: 45,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/customnode/customNode.tsx",
-                lineNumber: 23,
+                lineNumber: 24,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/components/customnode/customNode.tsx",
-            lineNumber: 22,
+            lineNumber: 23,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/src/components/customnode/customNode.tsx",
-        lineNumber: 14,
+        lineNumber: 15,
         columnNumber: 5
     }, this);
 }
